@@ -1,0 +1,24 @@
+ffmpeg -re -stream_loop -1 -i /home/archer/saves/videos/Concasseur_ch9_20240328110637_20240328110803.dav -c copy -f rtsp -rtsp_transport tcp rtsp://127.0.0.1:8554/live
+
+./mediamtx
+
+rtsp://localhost:8554/live
+
+ssh -L 8554:localhost:8554 archer@archer1server.duckdns.org
+
+
+python testing_script.py --video_path "C:\Users\Legion\Desktop\venv_wokplace\test_gpu_conda\Av_stuff\anom.mp4" --model_path "C:\Users\Legion\Desktop\venv_wokplace\test_gpu_conda\model_saved_resnet_v2_finetune\resnet_v2_scratch_vae_best.pth" --threshold 0.1 --use_lpips --frame_sampling_rate 3 --latent_dim 512 --output_anomaly_dir "./anomalies_lpips_test2"
+
+python analyse_video_online.py --stream_url "rtsp://127.0.0.1:8554/live" --model_path "C:\Users\Legion\Desktop\venv_wokplace\test_gpu_conda\model_saved_resnet_v2_finetune\resnet_v2_scratch_vae_best.pth" --threshold 0.07 --frame_sampling_rate 2
+
+
+
+############################### Running te steam script #########################################
+python test_script_linux.py --stream_url "rtsp://127.0.0.1:8554/live" \
+--model_path "/home/archer/venv/resnet_v2_scratch_vae_best.pth" \
+--threshold 0.14 \
+--use_lpips \
+--frame_sampling_rate 10 \
+--latent_dim 512 \
+--status_interval 20
+#################################################################################################
