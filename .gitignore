@@ -4,5 +4,4 @@ conda_env_win_configuration.yml
 
 # Directories with base code
 training_phase/models*/
-training_phase/av_vid.zip
 output_anomalies_online*/
