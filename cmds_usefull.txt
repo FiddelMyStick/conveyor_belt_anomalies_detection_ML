@@ -4,8 +4,13 @@ ffmpeg -re -stream_loop -1 -i /home/archer/saves/videos/Concasseur_ch9_202403281
 
 rtsp://localhost:8554/live
 
+##################################### OPEN PORTS ############################################################
+
 ssh -L 8554:localhost:8554 archer@archer1server.duckdns.org
 
+ssh -L 5000:localhost:5000 archer@192.168.8.24  
+
+#################################################################################################
 
 python testing_script.py --video_path "C:\Users\Legion\Desktop\venv_wokplace\test_gpu_conda\Av_stuff\anom.mp4" --model_path "C:\Users\Legion\Desktop\venv_wokplace\test_gpu_conda\model_saved_resnet_v2_finetune\resnet_v2_scratch_vae_best.pth" --threshold 0.1 --use_lpips --frame_sampling_rate 3 --latent_dim 512 --output_anomaly_dir "./anomalies_lpips_test2"
 
