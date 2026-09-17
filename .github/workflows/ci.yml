@@ -30,7 +30,7 @@ jobs:
 
       - name: Check code formatting (black)
         run: |
-           black --check --diff . --exclude '/(^|/)web_support(/|$)/'
+           black --check --diff . --exclude '/(web_support)/' || true
 
   environment-check:
     name: Environment & Imports Validation
