@@ -1,0 +1,59 @@
+name: CI/CD – Conveyor Belt Anomaly Detection
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  code-quality:
+    name: Code Quality & Syntax Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install flake8 black
+
+      - name: Check syntax errors (flake8)
+        run: |
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+
+      - name: Check code formatting (black)
+        run: |
+          black --check --diff .
+
+  environment-check:
+    name: Environment & Imports Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install core dependencies
+        run: |
+          pip install torch torchvision numpy opencv-python matplotlib tqdm
+
+      - name: Validate core module imports
+        run: |
+          python -c "import torch; import torchvision; import numpy; import cv2; import matplotlib; print('All core imports OK')"
+
+      - name: Check model file syntax
+        run: |
+          python -m py_compile resnet.py
+          echo "resnet.py syntax OK"
