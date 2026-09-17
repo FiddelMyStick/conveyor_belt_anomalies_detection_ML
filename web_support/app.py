@@ -34,6 +34,7 @@ def index():
 
 @app.route('/start_analysis', methods=['POST'])
 def start_analysis():
+    global analysis_process
     if analysis_process and analysis_process.is_alive():
         return jsonify({'status': 'error', 'message': 'Analysis already running'})
 
